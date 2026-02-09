@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>KaryaNet</title>
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+        <link rel="stylesheet" href="./styles/header.css">
+        <link rel="stylesheet" href="./styles/landing.css">
+    </head>
+
+    <body>
+        <div class="page-bg">
+            <!-- Header Section -->
+            <header>
+                <div class="left-header">
+                    <a href="./pages/about.html">KaryaNet</a>
+                </div>
+
+                <div class="right-header" id="navMenu">
+                    <nav>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="./pages/services.html">Services</a></li>
+                            <li><a href="./pages/login.html">Login</a></li>
+                            <li>
+                                <div class="language-selector" id="languageSelector">
+                                    <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" role="img">
+                                        <path fill="currentColor" fill-rule="evenodd" d="M10.77 5.33 10.5 6 9.34 8.94l-.57 1.44L7.33 14h1.78l.73-1.97h3.58l.74 1.97H16l-3.43-8.67zm-.15 4.6-.24.63h2.51l-1.26-3.35zm-1.1-5.09.1-.19h-3.2V2h-1.5v2.65H.55V6h3.77A11 11 0 0 1 0 10.43c.33.28.81.8 1.05 1.16 1.5-.91 2.85-2.36 3.88-4.02v5.1h1.49V7.52q.6.95 1.33 1.8l.57-1.43a12 12 0 0 1-1.34-1.9h2.09z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    <span class="selected-language">English</span>
+                                    <span class="dropdown-arrow"></span>
+
+                                    <div class="language-dropdown" id="languageDropdown">
+                                        <div value="hi" data-lang="hi">हिंदी</div>
+                                        <div value="te" data-lang="te">తెలుగు</div>
+                                        <div value="en" data-lang="en">English</div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </header>
+
+            <section class="hero" role="banner" aria-label="Hero Section" id="hero">
+                <div class="container content">
+                    <h1>Find Trusted Workers Near You — Instantly!</h1>
+                    <p>Book electricians, mechanics, carpenters, and more in your village with just one tap.</p>
+                    <div class="search-area">
+                        <div class="search-box">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 24 24" fill="#3a7f40">
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/>
+                            </svg>
+                            <input type="text" placeholder="Enter Location" />
+                        </div>
+                        <div class="search-box">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 24 24" fill="#3a7f40">
+                            <path d="M19.43 12.98c.04-.32.07-.65.07-.98s-.03-.66-.07-.98l2.11-1.65a.5.5 0 00.12-.64l-2-3.46a.5.5 0 00-.6-.22l-2.49 1a7.14 7.14 0 00-1.7-.98l-.38-2.65A.5.5 0 0014 2h-4a.5.5 0 00-.5.42l-.38 2.65c-.63.24-1.21.57-1.7.98l-2.49-1a.5.5 0 00-.6.22l-2 3.46a.5.5 0 00.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65a.5.5 0 00-.12.64l2 3.46a.5.5 0 00.6.22l2.49-1c.49.41 1.07.74 1.7.98l.38 2.65A.5.5 0 0010 22h4a.5.5 0 00.5-.42l.38-2.65c.63-.24 1.21-.57 1.7-.98l2.49 1a.5.5 0 00.6-.22l2-3.46a.5.5 0 00-.12-.64l-2.12-1.65zM12 15.5A3.5 3.5 0 1115.5 12 3.5 3.5 0 0112 15.5z"/>
+                            </svg>
+
+                            <input type="text" placeholder="Enter Service" />
+                        </div>
+                        <button class="search-button" id="searchButton">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="18" width="18" viewBox="0 0 24 24" fill="white" style="margin-left: 2px;">
+                            <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zM9.5 14C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                            </svg>
+
+                            Search
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- POPULAR SERVICES SECTION -->
+        <section class="services" id="services">
+            <div class="services-container">
+                <h2>Popular Services Around You</h2>
+                <p class="services-subtext">
+                From farming to fixing, find trusted professionals for every rural need — right from your phone.
+                </p>
+
+                <div class="cards-grid">
+                    <div class="service-card">
+                        <img src="https://images.unsplash.com/photo-1692158734790-4da8de3f2c82?auto=format&fit=crop&q=80&w=1170" alt="Tractor Rental">
+                        <h3>🚜 Tractor Rental</h3>
+                        <p>Affordable tractor rentals for ploughing, harvesting, and other farm operations with trusted owners nearby.</p>
+                    </div>
+
+                    <div class="service-card">
+                        <img src="https://plus.unsplash.com/premium_photo-1678766819153-b3f7307c5127?auto=format&fit=crop&q=80&w=1171" alt="Electrician">
+                        <h3>💡 Electrician</h3>
+                        <p>Skilled electricians available for household wiring, repairs, and power maintenance in your village.</p>
+                    </div>
+
+                    <div class="service-card">
+                        <img src="https://images.unsplash.com/photo-1628222274353-0f7c1adf8d21?auto=format&fit=crop&q=80&w=1170" alt="Mechanic">
+                        <h3>🔧 Mechanic</h3>
+                        <p>Repair your bikes, autos, and tractors quickly — expert mechanics ready to reach your location anytime.</p>
+                    </div>
+
+                    <div class="service-card">
+                        <img src="https://plus.unsplash.com/premium_photo-1745198323563-8d8037520253?auto=format&fit=crop&q=80&w=1170" alt="Carpenter">
+                        <h3>🪵 Carpenter</h3>
+                        <p>Get quality furniture or quick wooden repairs — reliable carpenters providing on-site services.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- HOW IT WORKS SECTION -->
+        <section class="how-it-works" id="how-it-works">
+            <h2>How It Works</h2>
+            <div class="timeline">
+                <div class="timeline-step left">
+                    <div class="timeline-step-content">
+                        <h3>🔍 Search</h3>
+                        <p>Find skilled workers and essential services in your village. Enter your location and service type to explore nearby options instantly.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-step right">
+                    <div class="timeline-step-content">
+                        <h3>📘 Book</h3>
+                        <p>Choose a trusted worker and book their service easily. Get instant confirmation and contact details — all in one place.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-step left">
+                    <div class="timeline-step-content">
+                        <h3>🛠️ Get Help</h3>
+                        <p>Relax while the worker reaches your location to complete the job quickly and reliably. Hassle-free service at your doorstep.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TESTIMONIAL SECTION -->
+        <section class="testimonials" id="testimonials">
+            <h2>What Our Users Say</h2>
+            <div class="testimonial-row">
+                <div class="testimonial-box">
+                    <p class="message">“RuralConnect helped me find a tractor within minutes. The process was smooth and easy!”</p>
+                    <div class="stars">★ ★ ★ ★ ★</div>
+                    <h3>Raju Kumar</h3>
+                    <p class="location">Village: Nandipet</p>
+                </div>
+
+                <div class="testimonial-box">
+                    <p class="message">“I booked an electrician from my nearby village — he arrived quickly and fixed everything perfectly!”</p>
+                    <div class="stars">★ ★ ★ ★ ★</div>
+                    <h3>Sita Devi</h3>
+                    <p class="location">Village: Medak</p>
+                </div>
+
+                <div class="testimonial-box">
+                    <p class="message">“Great platform! Finally, something made for rural areas to connect workers and people easily.”</p>
+                    <div class="stars">★★★★☆</div>
+                    <h3>Manoj Patel</h3>
+                    <p class="location">Village: Karimnagar</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 🌾 Footer Section -->
+        <footer class="footer" id="footer">
+            <div class="footer-container">
+                <div class="footer-col about">
+                    <h3>KaryaNet</h3>
+                    <p>Empowering rural communities with easy access to local services. 
+                    Farming and living made simpler with technology and trust.</p>
+                </div>
+
+                <div class="footer-col links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#hero">Home</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#testimonials">Testimonials</a></li>
+                        <li><a href="#footer">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col contact">
+                    <h4>Contact Us</h4>
+                    <p><strong>Email:</strong> support@agritech.com</p>
+                    <p><strong>Phone:</strong> +91 xxxxx xxxxx</p>
+                    <p><strong>Address:</strong> Punjab, India</p>
+                </div>
+
+                <div class="footer-col social">
+                    <h4>Follow Us</h4>
+                    <div class="social-icons">
+                        <a href="https://www.facebook.com/AgriTechIndiaExpo/" target="_blank"><i class="fab fa-facebook"></i></a>
+                        <a href="https://twitter.com/search?q=%23Agritech" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/agri__tech/?hl=en" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://in.linkedin.com/company/agritechindia" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2025 KaryaNet | Built with ⚡ by <strong>CodeCatalysts</strong></p>
+            </div>
+        </footer>
+
+        <!-- ✅ FIXED SCRIPT -->
+        <script>
+        // Toggle language dropdown
+        const langSelector = document.getElementById('languageSelector');
+        const langDropdown = document.getElementById('languageDropdown');
+
+        langSelector.addEventListener('click', e => {
+            e.stopPropagation();
+            langDropdown.classList.toggle('active');
+        });
+
+        window.addEventListener('click', () => {
+            langDropdown.classList.remove('active');
+        });
+
+        // Change language label
+        langDropdown.querySelectorAll('div').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelector('.selected-language').textContent = option.textContent;
+                langDropdown.classList.remove('active');
+            });
+        });
+
+        // Search button redirect
+        document.getElementById("searchButton").addEventListener("click", function() {
+            window.location.href = "./pages/services.html";
+        });
+
+        // Fade-up animation observer
+        const cards = document.querySelectorAll('.service-card');
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeUp 0.8s ease forwards';
+                }
+            });
+        }, { threshold: 0.1 });
+        cards.forEach(card => observer.observe(card));
+
+        // Timeline scroll reveal
+        const steps = document.querySelectorAll('.timeline-step');
+        const revealSteps = () => {
+            const triggerBottom = window.innerHeight * 0.85;
+            steps.forEach(step => {
+                const stepTop = step.getBoundingClientRect().top;
+                if (stepTop < triggerBottom) step.classList.add('active');
+            });
+        };
+        window.addEventListener('scroll', revealSteps);
+        revealSteps();
+
+        // Testimonials fade-in
+        const testimonials = document.querySelectorAll('.testimonial-box');
+        const showTestimonials = () => {
+            const triggerBottom = window.innerHeight * 0.85;
+            testimonials.forEach(t => {
+                const top = t.getBoundingClientRect().top;
+                if (top < triggerBottom) t.classList.add('active');
+            });
+        };
+        window.addEventListener('scroll', showTestimonials);
+        showTestimonials();
+
+        // ✅ Fixed Translation Logic
+        const dropdownOptions = document.querySelectorAll('#languageDropdown div');
+        const allTextElements = document.querySelectorAll('h1, h2, h3, p, button, label, span');
+        const allLinks = document.querySelectorAll('a');
+
+        async function translateText(text, targetLang) {
+            try {
+                const response = await fetch("http://127.0.0.1:8000/translate", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ text, target_lang: targetLang }),
+                });
+                const data = await response.json();
+                return data.translated_text || text;
+            } catch (error) {
+                console.error("Translation error:", error);
+                return text;
+            }
+        }
+
+        dropdownOptions.forEach(option => {
+            option.addEventListener('click', async () => {
+                const targetLang = option.getAttribute('data-lang');
+                document.querySelector('.selected-language').textContent = option.textContent;
+                
+                // Translate general text
+                for (const el of allTextElements) {
+                    if (el.innerText.trim() !== "") {
+                        const translated = await translateText(el.innerText, targetLang);
+                        el.innerText = translated;
+                    }
+                }
+
+                // Translate link text (without breaking href)
+                for (const link of allLinks) {
+                    if (link.textContent.trim() !== "") {
+                        const translated = await translateText(link.textContent, targetLang);
+                        link.textContent = translated;
+                    }
+                }
+            });
+        });
+        </script>
+    </body>
+</html>

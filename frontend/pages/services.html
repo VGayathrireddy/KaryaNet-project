@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KaryaNet | Services</title>
+  <style>
+    /* --- Your CSS stays exactly the same --- */
+    
+    /* General Styles */
+    *{margin:0;padding:0;box-sizing:border-box;font-family:"Poppins",sans-serif;}
+    body{background:#e8f5e9;color:#2e3d1f;display:flex;flex-direction:column;min-height:100vh;}
+    header{background:#388e3c;color:white;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;}
+    .logo a{font-size:1.5rem; text-decoration: none; color: white; font-weight: bold;}
+    
+    nav ul{display:flex;gap:1.5rem;list-style:none;font-weight:500;}
+    nav ul li a{text-decoration:none;color:white;padding:0.7rem 1.2rem;border-radius:8px;transition:0.3s;font-size:1.2rem;font-weight:bold;}
+    main{display:flex;flex:1;padding:1rem;gap:1rem;}
+
+    /* Sidebar */
+    .sidebar{flex:0 0 250px;background:#f1f8e9;border-radius:10px;padding:1rem;box-shadow:0 0 5px rgba(0,0,0,0.1);height:fit-content;}
+    .sidebar h2{font-size:1.2rem;margin-bottom:1rem;color:#33691e;}
+    .filter-group{margin-bottom:1rem;}
+    .filter-group label{display:block;font-weight:500;margin-bottom:0.3rem;color:#33691e;}
+    .filter-group input,.filter-group select{width:100%;padding:0.4rem;border:1px solid #c5e1a5;border-radius:5px;background:#f1f8e9;}
+
+    /* Service Section */
+    .service-section{flex:1;display:flex;flex-direction:column;gap:1rem;}
+    .search-bar{display:flex;justify-content:space-between;align-items:center;background:#f1f8e9;padding:0.7rem 1rem;border-radius:10px;box-shadow:0 0 5px rgba(0,0,0,0.1);}
+    .search-bar input{width:100%;border:none;outline:none;font-size:1rem;padding:0.5rem;background:#f1f8e9;}
+    .service-grid{display:flex;flex-wrap:wrap;gap:1rem;}
+    .card{flex:1 1 calc(25% - 1rem);max-width:300px;background:#ffffff;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,0.1);padding:1rem;display:flex;flex-direction:column;justify-content:space-between;transition:transform 0.2s ease;cursor:pointer;}
+    .card img{max-width:100%;max-height:150px;object-fit:cover;border-radius:8px;margin-bottom:0.5rem;}
+    .card:hover{transform:translateY(-5px);}
+    .card h3{margin:0.8rem 0 0.4rem;font-size:1.1rem;color:#2e3d1f;}
+    .card p{font-size:0.9rem;color:#555;flex-grow:1;}
+    .card .category{font-size:0.85rem;color:#558b2f;margin-bottom:0.5rem;}
+    .card .rating{font-weight:600;margin:0.5rem 0;color:#33691e;}
+    .book-btn{background:#2e7d32;color:white;border:none;border-radius:6px;padding:0.5rem;cursor:pointer;font-weight:500;transition:background 0.2s;margin-top:0.5rem;}
+    .book-btn:hover{background:#1b5e20;}
+    footer{background:#388e3c;color:white;text-align:center;padding:1rem;}
+    .loader{text-align:center;font-size:1.2rem;color:#558b2f;}
+
+    /* Modal common styles */
+    .modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:998;}
+    .modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#f1f8e9;padding:1.5rem;border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,0.3);z-index:999;max-width:700px;width:90%;display:none;max-height:90vh;overflow-y:auto;}
+    .modal h2{margin-bottom:1rem;color:#2e3d1f;}
+    .modal .close-btn{position:absolute;top:10px;right:15px;background:#c5e1a5;color:white;border:none;border-radius:50%;width:25px;height:25px;font-weight:bold;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+    .modal .close-btn:hover{background:#9ccc65;}
+    .modal label{display:block;margin-top:0.5rem;font-weight:500;color:#33691e;}
+    .modal input, .modal textarea{width:100%;padding:0.5rem;margin-top:0.3rem;border:1px solid #c5e1a5;border-radius:5px;background:#ffffff;}
+    .modal button.submit-btn{background:#2e7d32;color:white;border:none;padding:0.5rem 1rem;border-radius:6px;margin-top:1rem;cursor:pointer;font-weight:500;}
+    .modal button.submit-btn:hover{background:#1b5e20;}
+
+    /* Table inside modal */
+    .modal table{width:100%;border-collapse:collapse;margin-top:0.5rem;}
+    .modal table td{padding:0.5rem;border:1px solid #c5e1a5;color:#2e3d1f;}
+    .modal table img{max-width:150px;border-radius:8px;margin-bottom:0.5rem;}
+
+    /* Responsive */
+    @media(max-width:1024px){.card{flex:1 1 calc(33.33% - 1rem);}}
+    @media(max-width:768px){main{flex-direction:column;}.sidebar{flex:none;width:100%;}.card{flex:1 1 calc(50% - 1rem);}}
+    @media(max-width:500px){.card{flex:1 1 100%;}}
+    .overlay {display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;background: rgba(0, 0, 0, 0.4); z-index: 998; transition: opacity 0.3s ease;}
+    .overlay.active {display: block; opacity: 1;}
+    @media (max-width: 770px) {main { flex-direction: column;}
+    .sidebar {position: fixed;top: 70px; left: 0;width: 250px;height: 100%;background: #f1f8e9;box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);transform: translateX(-100%);transition: transform 0.3s ease;z-index: 999;overflow-y: auto;}
+    .sidebar.active {transform: translateX(0);}
+    .filter-toggle {display: block;background: #388e3c;color: white;border: none;border-radius: 6px;padding: 0.6rem 1rem;font-size: 1rem;cursor: pointer;align-self: flex-start;}
+    .card {flex: 1 1 calc(100% - 1rem);} }
+    @media (min-width: 771px) {.filter-toggle {display: none;}}
+    @media(max-width:770px) and (min-width:451px){.card{flex:1 1 calc(50% - 1rem);}}
+    @media(max-width:450px){.card{flex:1 1 100%;}}
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="logo"><a href="../pages/services.html">KaryaNet Services</a></div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="./services.html">Services</a></li>
+        <li><a href="#" onclick="logout()">Logout</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <aside class="sidebar">
+      <h2>Filters</h2>
+      <div class="filter-group">
+        <label>Category</label>
+        <input type="text" id="categoryFilter" placeholder="e.g. Farming, Construction" />
+      </div>
+      <div class="filter-group">
+        <label>Rating</label>
+        <select id="ratingFilter">
+          <option value="">All</option>
+          <option value="4">4★ & above</option>
+          <option value="3">3★ & above</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Description Keyword</label>
+        <input type="text" id="descFilter" placeholder="e.g. repair, rental..." />
+      </div>
+      <div class="filter-group">
+        <label>Availability</label>
+        <select id="availableFilter">
+          <option value="">All</option>
+          <option value="true">Available</option>
+          <option value="false">Unavailable</option>
+        </select>
+      </div>
+    </aside>
+    <div id="overlay" class="overlay"></div>
+
+    <section class="service-section">
+      <button id="filterToggle" class="filter-toggle">☰ Filters</button>
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search workers..." />
+      </div>
+      <div id="loader" class="loader">Loading services...</div>
+      <div class="service-grid" id="serviceGrid"></div>
+    </section>
+  </main>
+
+  <div id="modalOverlay" class="modal-overlay"></div>
+
+  <!-- Worker Details Modal -->
+  <div id="workerModal" class="modal">
+    <button class="close-btn" onclick="closeModal('workerModal')">×</button>
+    <div id="workerDetails"></div>
+  </div>
+
+  <!-- Booking Modal -->
+  <div id="bookingModal" class="modal">
+    <button class="close-btn" onclick="closeModal('bookingModal')">×</button>
+    <h2>Book This Service</h2>
+    <form id="bookingForm">
+      <input type="hidden" id="customer_id" />
+      <input type="hidden" id="worker_id" />
+      <label for="customer_name">Your Name</label>
+      <input type="text" id="customer_name" required />
+      <label for="worker_name">Worker Name</label>
+      <input type="text" id="worker_name" readonly />
+      <label for="location">Location</label>
+      <input type="text" id="location" required />
+      <label for="price">Price</label>
+      <input type="number" id="price" required />
+      <label for="date">Date</label>
+      <input type="date" id="date" required />
+      <label for="status">Status</label>
+      <input type="text" id="status" value="Pending" readonly />
+      <label for="contact">Contact</label>
+      <input type="text" id="contact" required />
+      <label for="description_work">Work Description</label>
+      <textarea id="description_work" rows="3" required></textarea>
+      <button type="submit" class="submit-btn">Submit Booking</button>
+    </form>
+  </div>
+
+  <footer><p>© 2025 KaryaNet. All rights reserved.</p></footer>
+
+  <script>
+    const grid = document.getElementById("serviceGrid");
+    const loader = document.getElementById("loader");
+    const modalOverlay = document.getElementById("modalOverlay");
+    const workerModal = document.getElementById("workerModal");
+    const bookingModal = document.getElementById("bookingModal");
+    const workerDetailsDiv = document.getElementById("workerDetails");
+    const bookingForm = document.getElementById("bookingForm");
+    let workers = [];
+
+    const currentUser = JSON.parse(localStorage.getItem("user"));
+    function logout() {
+      localStorage.removeItem("user");
+      alert("Logged out successfully!");
+      window.location.href = "../pages/login.html";
+    }
+
+    async function loadWorkers() {
+      try {
+        const res = await fetch("http://127.0.0.1:8000/workers");
+        workers = await res.json();
+        loader.style.display = "none";
+        displayWorkers(workers);
+
+        // Handle pending booking after login
+        const pendingWorkerId = localStorage.getItem("pendingBookingWorker");
+        if (pendingWorkerId && currentUser) {
+          const worker = workers.find(w => w.id == pendingWorkerId);
+          if (worker) showBookingModal(worker);
+          localStorage.removeItem("pendingBookingWorker");
+        }
+      } catch {
+        loader.textContent = "Failed to load services.";
+      }
+    }
+
+    function displayWorkers(list) {
+      grid.innerHTML = "";
+      if (list.length === 0) {
+        grid.innerHTML = "<p>No workers found.</p>";
+        return;
+      }
+      list.forEach(w => {
+        const card = document.createElement("div");
+        card.classList.add("card");
+        card.innerHTML = `
+          <img src="${w.image}" alt="${w.name}" />
+          <h3>${w.name}</h3>
+          <div class="category">Category: ${w.category}</div>
+          <p>${w.description}</p>
+          <div class="rating">⭐ ${w.rating} (${w.reviews} reviews)</div>
+          <button class="book-btn">Book Now</button>
+        `;
+        card.querySelector(".book-btn").addEventListener("click", e => {
+          e.stopPropagation();
+          handleBookNow(w);
+        });
+        grid.appendChild(card);
+      });
+    }
+
+    function handleBookNow(worker) {
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (!user) {
+        alert("Please log in to book a service.");
+        localStorage.setItem("pendingBookingWorker", worker.id);
+        window.location.href = "../pages/login.html";
+        return;
+      }
+      showBookingModal(worker);
+    }
+
+    function showBookingModal(worker) {
+      document.getElementById("worker_id").value = worker.id;
+      document.getElementById("worker_name").value = worker.name;
+      document.getElementById("customer_id").value = currentUser?.user_id || "";
+      document.getElementById("customer_name").value = currentUser?.name || "";
+      document.getElementById("contact").value = currentUser?.email || "";
+      openModal(bookingModal);
+    }
+
+    function openModal(modal) {
+      modal.style.display = "block";
+      modalOverlay.style.display = "block";
+    }
+    function closeModal(modalId) {
+      document.getElementById(modalId).style.display = "none";
+      modalOverlay.style.display = "none";
+    }
+    modalOverlay.addEventListener("click", () => {
+      closeModal("workerModal");
+      closeModal("bookingModal");
+    });
+
+    bookingForm.addEventListener("submit", e => {
+      e.preventDefault();
+      alert("Booking submitted successfully!");
+      bookingForm.reset();
+      closeModal("bookingModal");
+    });
+
+        // ✅ SEARCH & FILTER FUNCTIONALITY
+    const categoryFilter = document.getElementById("categoryFilter");
+    const ratingFilter = document.getElementById("ratingFilter");
+    const descFilter = document.getElementById("descFilter");
+    const availableFilter = document.getElementById("availableFilter");
+
+    function applyFilters() {
+      const searchTerm = searchInput.value.toLowerCase();
+      const categoryTerm = categoryFilter.value.toLowerCase();
+      const descTerm = descFilter.value.toLowerCase();
+      const ratingValue = ratingFilter.value;
+      const availability = availableFilter.value;
+
+      const filtered = workers.filter(w => {
+        const matchSearch = w.name.toLowerCase().includes(searchTerm);
+        const matchCategory = w.category.toLowerCase().includes(categoryTerm);
+        const matchDesc = w.description.toLowerCase().includes(descTerm);
+        const matchRating = ratingValue ? w.rating >= parseInt(ratingValue) : true;
+        const matchAvail = availability ? String(w.available) === availability : true;
+
+        return matchSearch && matchCategory && matchDesc && matchRating && matchAvail;
+      });
+
+      displayWorkers(filtered);
+    }
+
+    [searchInput, categoryFilter, ratingFilter, descFilter, availableFilter].forEach(el =>
+      el.addEventListener("input", applyFilters)
+    );
+
+    // ======== Sidebar Toggle for Mobile ========
+  const filterToggle = document.getElementById("filterToggle");
+  const sidebar = document.querySelector(".sidebar");
+  const overlay = document.getElementById("overlay");
+
+  // Open sidebar when clicking the filter button
+  filterToggle.addEventListener("click", (e) => {
+    e.stopPropagation();
+    sidebar.classList.add("active");
+    overlay.classList.add("active");
+  });
+
+  // Close sidebar when clicking on overlay
+  overlay.addEventListener("click", () => {
+    sidebar.classList.remove("active");
+    overlay.classList.remove("active");
+  });
+
+  // Close sidebar if clicking anywhere outside (for safety)
+  document.addEventListener("click", (e) => {
+    if (
+      sidebar.classList.contains("active") &&
+      !sidebar.contains(e.target) &&
+      !filterToggle.contains(e.target)
+    ) {
+      sidebar.classList.remove("active");
+      overlay.classList.remove("active");
+    }
+  });
+
+
+    loadWorkers();
+  </script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual environment
+hackproj/
+pyvenv.cfg
+
+# Environment variables
+.env

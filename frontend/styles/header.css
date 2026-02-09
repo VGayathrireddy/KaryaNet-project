@@ -1,0 +1,181 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f4f1ea; /* light neutral for demo */
+}
+
+.page-bg{
+    background:
+      linear-gradient(to bottom right, rgba(58,125,68,0.75), rgba(84,153,55,0.7)),
+      url('../images/background-1.jpg') no-repeat center center/cover;
+    min-height: 100vh;
+    width: 100%;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 3rem;
+    padding-left: 2rem;
+    color: #fff;
+    flex-wrap: wrap;
+}
+
+/* Left side - Logo + name */
+.left-header a {
+    font-size: 2rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: #fff;
+}
+
+/* Right side nav */
+.right-header nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.right-header nav ul li a,
+.language-selector {
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.right-header nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Language selector container */
+.language-selector {
+    display: flex;
+    align-items: center;
+    border: 1.5px solid #fff;
+    border-radius: 6px;
+    padding: 0.25rem 0.6rem;
+    gap: 0.4rem;
+    position: relative;
+    background: transparent;
+    user-select: none;
+}
+
+/* Language icon: combining A and Chinese character style */
+.language-icon {
+    font-weight: bold;
+    font-size: 1.1rem;
+    position: relative;
+}
+/* For demonstration: letter A and a simple Chinese character */
+.language-icon::before {
+    content: "A";
+    position: relative;
+    top: 0;
+    left: 0;
+    margin-right: 2px;
+}
+.language-icon::after {
+    font-size: 0.9rem;
+    margin-left: 2px;
+}
+
+/* Dropdown arrow */
+.dropdown-arrow {
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 4px;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+}
+
+/* Dropdown menu */
+.language-dropdown {
+    position: absolute;
+    top: 110%;
+    right: 0;
+    border: 1px solid #fff;
+    border-radius: 6px;
+    overflow: hidden;
+    display: none;
+    min-width: 110px;
+    z-index: 1000;
+}
+
+.language-dropdown.active {
+    display: block;
+}
+
+.language-dropdown div {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    color: #fff;
+    font-weight: 600;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(1px);
+}
+
+.language-dropdown div:hover {
+    background: #067810; /* button color */
+}
+
+/* Responsive flex growth */
+header > div {
+    flex: 1 1 0;
+}
+
+.left-header {
+    flex: 1 1 150px;
+}
+
+.right-header {
+    flex: 3 1 350px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+@media (max-width: 670px) {
+    header {
+        padding: 0.8rem 1rem; /* smaller padding */
+        flex-wrap: nowrap; /* prevent wrapping */
+    }
+
+    /* Left header */
+    .left-header {
+        flex: 0 1 auto; /* shrink naturally */
+        padding-left: 0; /* minimal padding */
+    }
+
+    .left-header a {
+        font-size: 1.4rem; /* smaller logo */
+    }
+
+    /* Right header */
+    .right-header {
+        flex: 1 1 auto; /* take remaining space but shrink if needed */
+        justify-content: flex-end;
+    }
+
+    .right-header nav ul {
+        gap: 0.8rem; /* tighter spacing */
+    }
+
+    .right-header nav ul li a {
+        font-size: 1.1rem; /* smaller links */
+    }
+
+    /* Hide language selector */
+    .language-selector {
+        font-size: 0.9rem;
+    }
+}

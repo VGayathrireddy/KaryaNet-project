@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KaryaNet | Customer Dashboard</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:#f4f7f8;min-height:100vh;}
+header{
+  background:#2E4600;color:white;padding:1rem 2rem;
+  display:flex;justify-content:space-between;align-items:center;
+  box-shadow:0 4px 6px rgba(0,0,0,0.1);
+}
+header .logo a{font-size:1.8rem;font-weight:bold;color:white;text-decoration:none;cursor:pointer;}
+header nav a{color:white;text-decoration:none;margin-left:1.5rem;font-weight:500;cursor:pointer;}
+.container{padding:2rem 2rem;}
+.container h2{margin-top: 2rem; margin-bottom: 1rem;}
+h1{margin-bottom:1rem;color:#2E4600;}
+button{cursor:pointer;}
+table{
+  width:100%;border-collapse:collapse;background:white;border-radius:12px;overflow:hidden;
+  box-shadow:0 4px 8px rgba(0,0,0,0.1);
+}
+table th, table td{padding:1rem;text-align:left;border-bottom:1px solid #ddd;}
+table th{background:#2E4600;color:white;}
+table tr:last-child td{border-bottom:none;}
+.status-completed{color:green;font-weight:600;}
+.status-pending{color:orange;font-weight:600;}
+
+/* Profile modal */
+#profileModal{
+  display:none;position:fixed;top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,0.5);justify-content:center;align-items:center;
+}
+#profileModal .modal-content{
+  background:white;padding:2rem;border-radius:12px;min-width:300px;max-width:400px;
+  position:relative;
+}
+#profileModal .close{
+  position:absolute;top:10px;right:15px;font-size:1.5rem;cursor:pointer;color:#333;
+}
+#profileModal h2{margin-bottom:1rem;color:#2E4600;}
+
+/* Services link section */
+#servicesLink{
+  background:white;padding:2rem;margin-top:2rem;border-radius:12px;box-shadow:0 4px 8px rgba(0,0,0,0.1);
+  text-align:center;
+}
+#servicesLink h2{color:#2E4600;margin-bottom:1rem;}
+#servicesLink button{
+  padding:0.7rem 1.5rem;background:#79b448;color:white;border:none;border-radius:8px;font-weight:500;margin-top: 1rem;
+}
+#servicesLink button:hover{background:#6B8E23;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><a href="../index.html">KaryaNet</a></div>
+  <nav>
+    <a id="homeLink" href="../index.html">Home</a>
+    <a id="profileBtn">Profile</a>
+    <a id="logoutBtn">Logout</a>
+  </nav>
+</header>
+
+<div class="container">
+  <h1>Welcome, <span id="userName">User</span> 👋</h1>
+
+  <!-- Go to Services -->
+  <div id="servicesLink">
+    <h2>Looking for a service provider?</h2>
+    <p>Click the button below to browse all available services and book easily.</p>
+    <button id="goServicesBtn">Go to Services</button>
+  </div>
+
+  <!-- My Bookings -->
+  <h2>My Recent Bookings</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Service</th>
+        <th>Worker</th>
+        <th>Date</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody id="bookingTable"></tbody>
+  </table>
+</div>
+
+<!-- Profile Modal -->
+<div id="profileModal">
+  <div class="modal-content">
+    <span class="close" id="closeProfile">&times;</span>
+    <h2>Profile</h2>
+    <p><strong>Name:</strong> <span id="profileName"></span></p>
+    <p><strong>Email:</strong> <span id="profileEmail"></span></p>
+    <p><strong>Role:</strong> <span id="profileRole"></span></p>
+    <p><strong>Total Bookings:</strong> <span id="profileBookings"></span></p>
+  </div>
+</div>
+
+<script>
+const user = JSON.parse(localStorage.getItem("user"));
+if(!user) window.location.href="login.html";
+document.getElementById("userName").textContent = user.name;
+
+// Profile modal
+const profileModal = document.getElementById("profileModal");
+document.getElementById("profileBtn").addEventListener("click", async()=>{
+  profileModal.style.display="flex";
+  document.getElementById("profileName").textContent = user.name;
+  document.getElementById("profileEmail").textContent = user.email;
+  document.getElementById("profileRole").textContent = user.role;
+
+  // Fetch bookings count from backend
+  const res = await fetch(`http://127.0.0.1:8000/bookings?customer_id=${user.user_id}`);
+  const data = await res.json();
+  document.getElementById("profileBookings").textContent = data.length;
+});
+document.getElementById("closeProfile").addEventListener("click", ()=>{profileModal.style.display="none";});
+
+// Logout
+document.getElementById("logoutBtn").addEventListener("click", ()=>{
+  localStorage.removeItem("user");
+  window.location.href="login.html";
+});
+
+// Go to Services button
+document.getElementById("goServicesBtn").addEventListener("click", ()=>{
+  window.location.href="services.html";
+});
+
+// Load recent bookings
+async function loadBookings() {
+  const user = JSON.parse(localStorage.getItem("user"));
+  if (!user || !user.user_id) {
+    console.error("User not found in localStorage");
+    return;
+  }
+
+  try {
+    const res = await fetch(`http://127.0.0.1:8000/bookings?customer_id=${user.user_id}`);
+    if (!res.ok) throw new Error("Network response was not ok");
+    const data = await res.json();
+
+    const table = document.getElementById("bookingTable");
+    table.innerHTML = "";
+
+    if (!data || data.length === 0) {
+      table.innerHTML = `<tr><td colspan="4" style="text-align:center;color:#777;">No bookings found</td></tr>`;
+      return;
+    }
+
+    data.forEach(b => {
+      const service = b.service || 'N/A';
+      const worker = b.worker_name || 'N/A';
+      const date = b.date || 'N/A';
+      const status = (b.status || 'Pending').toLowerCase();
+
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${service}</td>
+        <td>${worker}</td>
+        <td>${date}</td>
+        <td class="status-${status}">${b.status || 'Pending'}</td>
+      `;
+      table.appendChild(row);
+    });
+
+  } catch (error) {
+    console.error("Error loading bookings:", error);
+  }
+}
+
+loadBookings();
+</script>
+
+</body>
+</html>

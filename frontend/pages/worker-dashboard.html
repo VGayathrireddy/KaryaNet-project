@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KaryaNet | Worker Dashboard</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:#f4f7f8;min-height:100vh;}
+header{
+  background:#2E4600;color:white;padding:1rem 2rem;
+  display:flex;justify-content:space-between;align-items:center;
+  box-shadow:0 4px 6px rgba(0,0,0,0.1);
+}
+header .logo a{font-size:1.8rem;font-weight:bold;text-decoration: none;color: white;}
+header nav a{color:white;text-decoration:none;margin-left:1.5rem;font-weight:500;cursor:pointer;}
+header .role-switch button{
+  background:#79b448;color:white;border:none;
+  padding:0.5rem 1rem;border-radius:8px;cursor:pointer;font-weight:500;
+}
+header .role-switch button:hover{background:#6B8E23;}
+.container{padding:2rem;}
+h1{margin-bottom:1rem;color:#2E4600;}
+.services-grid, #bookingsList{margin-top:1rem;}
+ul{list-style:none;padding:0;}
+li{background:white;padding:1rem;margin-bottom:0.5rem;border-radius:8px;box-shadow:0 2px 5px rgba(0,0,0,0.1);}
+li button{float:right;background:#79b448;color:white;border:none;padding:0.3rem 0.6rem;border-radius:6px;cursor:pointer;}
+li button:hover{background:#6B8E23;}
+/* Profile modal */
+#profileModal{
+  display:none;position:fixed;top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,0.5);justify-content:center;align-items:center;
+}
+#profileModal .modal-content{
+  background:white;padding:2rem;border-radius:12px;min-width:300px;max-width:400px;
+  position:relative;
+}
+#profileModal .close{
+  position:absolute;top:10px;right:15px;font-size:1.5rem;cursor:pointer;color:#333;
+}
+#profileModal h2{margin-bottom:1rem;color:#2E4600;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><a href="../index.html">KaryaNet</a></div>
+  <nav>
+    <a id="homeLink" href="../index.html">Home</a>
+    <a id="profileBtn">Profile</a>
+    <a id="logoutBtn">Logout</a>
+  </nav>
+</header>
+
+<div class="container">
+  <h1>Welcome, <span id="userName">User</span> 👋</h1>
+
+  <h2>My Services</h2>
+  <ul id="servicesList"></ul>
+
+  <h2>Incoming Bookings</h2>
+  <ul id="bookingsList"></ul>
+</div>
+
+<!-- Profile Modal -->
+<div id="profileModal">
+  <div class="modal-content">
+    <span class="close" id="closeProfile">&times;</span>
+    <h2>Profile</h2>
+    <p><strong>Name:</strong> <span id="profileName"></span></p>
+    <p><strong>Email:</strong> <span id="profileEmail"></span></p>
+    <p><strong>Role:</strong> <span id="profileRole"></span></p>
+    <p><strong>Services Provided:</strong> <span id="profileServices"></span></p>
+    <p><strong>Total Bookings:</strong> <span id="profileBookings"></span></p>
+  </div>
+</div>
+
+<script>
+const user = JSON.parse(localStorage.getItem("user"));
+if(!user) window.location.href="login.html";
+document.getElementById("userName").textContent = user.name;
+
+// Profile modal
+const profileModal = document.getElementById("profileModal");
+document.getElementById("profileBtn").addEventListener("click", async()=>{
+  profileModal.style.display="flex";
+  document.getElementById("profileName").textContent = user.name;
+  document.getElementById("profileEmail").textContent = user.email;
+  document.getElementById("profileRole").textContent = user.role;
+
+  // Fetch worker details
+  const resWorker = await fetch(`http://127.0.0.1:8000/workers`);
+  const dataWorkers = await resWorker.json();
+  const myServices = dataWorkers.filter(w=>w.id === user.user_id).map(s=>s.name).join(", ");
+  document.getElementById("profileServices").textContent = myServices;
+
+  // Fetch bookings
+  const resBookings = await fetch(`http://127.0.0.1:8000/bookings?worker_id=${user.user_id}`);
+  const dataBookings = await resBookings.json();
+  document.getElementById("profileBookings").textContent = dataBookings.length;
+});
+document.getElementById("closeProfile").addEventListener("click", ()=>{profileModal.style.display="none";});
+
+// Logout
+document.getElementById("logoutBtn").addEventListener("click", ()=>{
+  localStorage.removeItem("user");
+  window.location.href="login.html";
+});
+
+// Load worker's services and bookings
+async function loadDashboard(){
+  // Services
+  const resWorkers = await fetch("http://127.0.0.1:8000/workers");
+  const dataWorkers = await resWorkers.json();
+  const servicesList = document.getElementById("servicesList");
+  servicesList.innerHTML="";
+  dataWorkers.filter(w=>w.id===user.user_id).forEach(s=>{
+    const li = document.createElement("li");
+    li.textContent = `${s.name} (${s.category}) - Rating: ${s.rating}`;
+    servicesList.appendChild(li);
+  });
+
+  // Bookings
+  const resBookings = await fetch(`http://127.0.0.1:8000/bookings?worker_id=${user.user_id}`);
+  const dataBookings = await resBookings.json();
+  const bookingsList = document.getElementById("bookingsList");
+  bookingsList.innerHTML="";
+  dataBookings.forEach(b=>{
+    const li = document.createElement("li");
+    li.textContent = `Customer: ${b.customer.name}, Date: ${b.date}, Status: ${b.status}`;
+    bookingsList.appendChild(li);
+  });
+}
+loadDashboard();
+</script>
+
+</body>
+</html>
