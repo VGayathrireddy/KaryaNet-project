@@ -42,64 +42,82 @@ The project is built using FastAPI for the backend, PostgreSQL for the database,
 ## 📁 Project Structure
 
 KaryaNet-project/
-│
-├── frontend/
-│ ├── icons/
-│ ├── images/
-│ ├── pages/
-│ ├── scripts/
-│ ├── styles/
-│ └── index.html
-│
-├── main.py
-├── models.py
-├── database.py
-├── database_models.py
-├── cgi.py
-├── .gitignore
-└── README.md
+- │
+- ├── frontend/
+- │ ├── icons/
+- │ ├── images/
+- │ ├── pages/
+- │ ├── scripts/
+- │ ├── styles/
+- │ └── index.html
+- │
+- ├── main.py
+- ├── models.py
+- ├── database.py
+- ├── database_models.py
+- ├── cgi.py
+- ├── .gitignore
+- └── README.md
 ---
 
 ## ⚙️ How to Run Locally
 
 ### 1. Clone Repository
+
 git clone https://github.com/VGayathrireddy/KaryaNet-project.git
+
 cd KaryaNet-project
 
 ### 2. Create Virtual Environment
+
 python -m venv venv
+
 venv\Scripts\activate
 
 ### 3. Install Dependencies
+
 pip install fastapi uvicorn psycopg2 sqlalchemy
 
+
 ### 4. Setup PostgreSQL
+
 Create a PostgreSQL database
+
 Update database credentials inside database.py
 
+
 ### 5. Run Backend
+
 uvicorn main:app --reload
 
+
 Backend runs at:
+
 http://127.0.0.1:8000
 
+
 ### 6. Run Frontend
+
 Open:
+
 frontend/index.html
+
 in browser.
 
+
 ### 🎯 Future Improvements
-Authentication using JWT
-Password hashing
-Cloud deployment
-Admin dashboard
-Better UI/UX
-Role-based authorization
+
+- Authentication using JWT
+- Password hashing
+- Cloud deployment
+- Admin dashboard
+- Better UI/UX
+- Role-based authorization
 
 
 ### 👩‍💻 Author
-GAYATHRI REDDY
-Full Stack Developer | Python & FastAPI Enthusiast
-GitHub: https://github.com/VGayathrireddy
+- GAYATHRI REDDY
+- Full Stack Developer | Python & FastAPI Enthusiast
+- GitHub: https://github.com/VGayathrireddy
 
 ⭐ If you like this project, feel free to star the repository!
